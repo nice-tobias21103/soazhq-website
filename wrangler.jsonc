@@ -1,7 +1,7 @@
 // wrangler.jsonc – Konfiguration für Cloudflare Workers (Wrangler = Cloudflares CLI)
 //
-// C#-Vergleich: so etwas wie .csproj + Publish-Profil in einem. Sagt Wrangler,
-// WAS deployt wird (der Ordner ./public) und unter welchem Worker-Namen.
+// C#-Vergleich: so etwas wie ein Publish-Profil. Sagt Wrangler, WAS deployt
+// wird (der von Astro gebaute Ordner ./dist) und unter welchem Worker-Namen.
 // JSONC = JSON mit Kommentaren.
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
@@ -11,12 +11,13 @@
   // Stand der Laufzeitumgebung, ähnlich wie das TargetFramework (net8.0) in C#.
   "compatibility_date": "2026-11-01",
 
-  // Nur statische Dateien aus ./public, kein Worker-Skript ("main" fehlt absichtlich).
+  // Nur statische Dateien aus ./dist (Ergebnis von `npm run build`),
+  // kein Worker-Skript ("main" fehlt absichtlich).
   "assets": {
-    "directory": "./public",
+    "directory": "./dist",
     // Unbekannte Adresse → public/404.html mit Status 404
     "not_found_handling": "404-page",
-    // /offenlegung liefert offenlegung.html aus (Adressen ohne .html)
+    // Adressen wie /privacy/ liefern privacy/index.html aus
     "html_handling": "auto-trailing-slash"
   },
 

@@ -1,0 +1,30 @@
+---
+// Englische Übersetzung der Datenschutzerklärung. Maßgeblich ist die deutsche Fassung.
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+import { ROUTES } from '../i18n';
+---
+<Base lang="en" page="privacy" title={`Privacy · ${SITE.name}`} description="Privacy policy: no tracking, no cookies.">
+  <div class="wrap legal">
+    <h1>Privacy policy</h1>
+
+    <h2>In short</h2>
+    <p>This website sets <strong>no cookies</strong>, uses <strong>no tracking</strong> or analytics tools and loads no content from third-party servers.</p>
+
+    <h2>Controller</h2>
+    <p>{SITE.owner}, {SITE.cityEn}, {SITE.countryEn} (see <a href={ROUTES.legal.en}>legal notice</a>).</p>
+
+    <h2>Hosting by Cloudflare</h2>
+    <p>This website is delivered via Cloudflare (Cloudflare, Inc., 101 Townsend St., San Francisco, CA 94107, USA). When you visit the site, Cloudflare processes technically necessary data, in particular your IP address, date and time of access, the requested address and browser and device information. This is necessary to deliver the site and protect it against attacks.</p>
+    <p>The legal basis is our legitimate interest in a secure and working website (Art. 6(1)(f) GDPR). Data may be transferred to the USA. Cloudflare is certified under the EU-US Data Privacy Framework; Cloudflare's data processing terms with standard contractual clauses also apply. More: <a href="https://www.cloudflare.com/privacypolicy/" rel="noreferrer">Cloudflare's privacy policy</a>.</p>
+    <p>We do not store or analyse any access data ourselves.</p>
+
+    <h2>Light/dark setting</h2>
+    <p>If you use the light/dark switch, your choice is stored only in your browser (localStorage, entry "theme"). It is never sent to us or to third parties and only serves to keep your preferred display. You can delete it at any time in your browser settings.</p>
+
+    <h2>Your rights</h2>
+    <p>You have the right of access, rectification, erasure, restriction of processing and objection (Art. 15–21 GDPR). If you believe the processing of your data violates data protection law, you can lodge a complaint with the Austrian Data Protection Authority (<a href="https://www.dsb.gv.at" rel="noreferrer">dsb.gv.at</a>).</p>
+
+    <p class="note">As of November 2026. This is a translation. The <a href={ROUTES.privacy.de} hreflang="de">German version</a> is legally binding.</p>
+  </div>
+</Base>

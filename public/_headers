@@ -3,14 +3,14 @@
 #
 # Wozu? Sicherheits-Header sagen dem Browser, was die Seite darf und was nicht.
 # Weil wir keine externen Skripte, Schriften oder Bilder laden, können wir
-# alles sehr streng einstellen.
+# alles sehr streng einstellen. Einziges Skript: /theme.js (Hell/Dunkel).
 #
 # C#-Vergleich: wie Middleware in ASP.NET Core, die jeder Antwort Header anhängt
 # (app.Use(...) / app.UseHsts()), nur ohne Code.
 
 /*
-  # Nur Inhalte von soazhq.com selbst erlaubt, keine Skripte, keine Frames
-  Content-Security-Policy: default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  # Nur Inhalte von soazhq.com selbst erlaubt, keine fremden Skripte, keine Frames
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
   # Browser soll Dateitypen nicht "erraten"
   X-Content-Type-Options: nosniff
   # Beim Klick auf externe Links nicht verraten, von welcher Seite man kommt

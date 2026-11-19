@@ -1,0 +1,67 @@
+---
+/**
+ * Home.astro – Inhalt der Startseite, für beide Sprachen.
+ * Die Texte kommen aus src/i18n/en.ts bzw. de.ts.
+ *
+ * C#-Vergleich: wie eine Razor-Partial-View mit einem Model (hier: lang).
+ */
+import { SITE } from '../site';
+import { t, type Lang } from '../i18n';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const h = t(lang).home;
+---
+<section class="wrap hero" aria-labelledby="hero-title">
+  <p class="label">{SITE.domain} · {h.since} {SITE.since}</p>
+  <h1 id="hero-title">{h.heroTitle}</h1>
+  <p class="sub">{h.heroSub}</p>
+  <div class="actions">
+    <a class="btn btn--primary" href="#story">{h.ctaStory}</a>
+    <a class="btn" href="#us">{h.ctaUs}</a>
+  </div>
+</section>
+
+<section id="story" class="section" aria-labelledby="story-title">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="label label--accent">01</p>
+      <h2 id="story-title">{h.storyTitle}</h2>
+    </div>
+    <div class="prose">
+      {h.story.map((p) => <p>{p}</p>)}
+    </div>
+  </div>
+</section>
+
+<section id="us" class="section" aria-labelledby="us-title">
+  <div class="wrap">
+    <div class="stack">
+      <p class="label label--accent">02</p>
+      <h2 id="us-title">{h.usTitle}</h2>
+    </div>
+    <div class="people">
+      {h.people.map((p, i) => (
+        <article class="card">
+          <div class={`avatar avatar--${i + 1}`} aria-hidden="true">{p.initial}</div>
+          <h3>{p.name}</h3>
+          <p>{p.line}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section id="timeline" class="section" aria-labelledby="timeline-title">
+  <div class="wrap split">
+    <div class="stack">
+      <p class="label label--accent">03</p>
+      <h2 id="timeline-title">{h.timelineTitle}</h2>
+    </div>
+    <ol class="timeline">
+      {h.timeline.map((e) => (
+        <li><span class="year">{e.year}</span><span>{e.text}</span></li>
+      ))}
+    </ol>
+  </div>
+</section>
