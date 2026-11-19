@@ -1,0 +1,23 @@
+---
+// Englische Übersetzung der Offenlegung. Maßgeblich ist die deutsche Fassung.
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+import { ROUTES } from '../i18n';
+---
+<Base lang="en" page="legal" title={`Legal notice · ${SITE.name}`} description="Legal notice according to the Austrian Media Act.">
+  <div class="wrap legal">
+    <h1>Legal notice</h1>
+    <p>Disclosure according to § 25 of the Austrian Media Act (Mediengesetz):</p>
+    <div class="card">
+      <dl>
+        <dt>Media owner</dt><dd>{SITE.owner}</dd>
+        <dt>Place of residence</dt><dd>{SITE.cityEn}, {SITE.countryEn}</dd>
+      </dl>
+    </div>
+    <h2>Basic orientation</h2>
+    <p>Private website of three friends.</p>
+    <h2>Contact</h2>
+    <p>A contact address will follow.</p>
+    <p class="note">This is a translation. The <a href={ROUTES.legal.de} hreflang="de">German version</a> is legally binding.</p>
+  </div>
+</Base>

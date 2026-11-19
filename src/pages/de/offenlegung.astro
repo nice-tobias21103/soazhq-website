@@ -1,0 +1,22 @@
+---
+// Offenlegung nach § 25 Mediengesetz (Österreich) – maßgebliche Fassung.
+// Für eine kleine private Website genügen Name und Wohnort (§ 25 Abs. 5 MedienG).
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../site';
+---
+<Base lang="de" page="legal" title={`Offenlegung · ${SITE.name}`} description="Offenlegung gemäß § 25 Mediengesetz.">
+  <div class="wrap legal">
+    <h1>Offenlegung</h1>
+    <p>Angaben gemäß § 25 Mediengesetz (Österreich):</p>
+    <div class="card">
+      <dl>
+        <dt>Medieninhaber</dt><dd>{SITE.owner}</dd>
+        <dt>Wohnort</dt><dd>{SITE.city}, {SITE.country}</dd>
+      </dl>
+    </div>
+    <h2>Grundlegende Richtung</h2>
+    <p>Private Website von drei Freunden.</p>
+    <h2>Kontakt</h2>
+    <p>Eine Kontaktadresse folgt.</p>
+  </div>
+</Base>
