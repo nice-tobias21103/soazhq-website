@@ -1,0 +1,25 @@
+# _headers – zusätzliche HTTP-Header für alle ausgelieferten Dateien.
+# Cloudflare liest diese Datei beim Deploy; sie selbst wird NICHT ausgeliefert.
+#
+# Wozu? Sicherheits-Header sagen dem Browser, was die Seite darf und was nicht.
+# Weil wir keine externen Skripte, Schriften oder Bilder laden, können wir
+# alles sehr streng einstellen.
+#
+# C#-Vergleich: wie Middleware in ASP.NET Core, die jeder Antwort Header anhängt
+# (app.Use(...) / app.UseHsts()), nur ohne Code.
+
+/*
+  # Nur Inhalte von soazhq.com selbst erlaubt, keine Skripte, keine Frames
+  Content-Security-Policy: default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  # Browser soll Dateitypen nicht "erraten"
+  X-Content-Type-Options: nosniff
+  # Beim Klick auf externe Links nicht verraten, von welcher Seite man kommt
+  Referrer-Policy: no-referrer
+  # Kein Zugriff auf Kamera, Mikrofon, Standort usw.
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  # Seite darf nicht in fremde Seiten eingebettet werden (Clickjacking-Schutz)
+  X-Frame-Options: DENY
+  Cross-Origin-Opener-Policy: same-origin
+  # Browser merkt sich ein Jahr lang: diese Seite nur per HTTPS öffnen.
+  # Bewusst OHNE includeSubDomains, damit spätere Subdomains frei bleiben.
+  Strict-Transport-Security: max-age=31536000

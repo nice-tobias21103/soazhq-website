@@ -1,0 +1,17 @@
+# Abhängigkeiten (werden per `npm ci` aus package-lock.json neu installiert,
+# vergleichbar mit dem NuGet-Ordner packages/ bzw. obj/ in C#)
+node_modules/
+
+# Lokale Wrangler-Daten und -Logs
+.wrangler/
+*.log
+
+# Lokale Geheimnisse – gehören NIE ins Repo
+.dev.vars
+.env*
+
+# Betriebssystem/Editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
