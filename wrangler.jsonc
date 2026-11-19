@@ -1,0 +1,43 @@
+// wrangler.jsonc – Konfiguration für Cloudflare Workers (Wrangler = Cloudflares CLI)
+//
+// C#-Vergleich: so etwas wie .csproj + Publish-Profil in einem. Sagt Wrangler,
+// WAS deployt wird (der Ordner ./public) und unter welchem Worker-Namen.
+// JSONC = JSON mit Kommentaren.
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+
+  "name": "soazhq-website",
+
+  // Stand der Laufzeitumgebung, ähnlich wie das TargetFramework (net8.0) in C#.
+  "compatibility_date": "2026-11-01",
+
+  // Nur statische Dateien aus ./public, kein Worker-Skript ("main" fehlt absichtlich).
+  "assets": {
+    "directory": "./public",
+    // Unbekannte Adresse → public/404.html mit Status 404
+    "not_found_handling": "404-page",
+    // /offenlegung liefert offenlegung.html aus (Adressen ohne .html)
+    "html_handling": "auto-trailing-slash"
+  },
+
+  "workers_dev": false,
+  "preview_urls": false,
+
+  "routes": [
+    { "pattern": "soazhq.com", "custom_domain": true },
+    { "pattern": "www.soazhq.com", "custom_domain": true }
+  ],
+
+  // Zweite Umgebung: `wrangler deploy --env dev` übernimmt alles von oben und
+  // überschreibt nur, was hier steht – wie Debug/Release-Konfigurationen in Visual Studio.
+  "env": {
+    "dev": {
+      "name": "soazhq-website-dev",
+      "workers_dev": false,
+      "preview_urls": false,
+      "routes": [
+        { "pattern": "dev.soazhq.com", "custom_domain": true }
+      ]
+    }
+  }
+}

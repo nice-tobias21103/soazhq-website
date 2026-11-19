@@ -1,0 +1,15 @@
+{
+  "name": "soazhq-website",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Website für soazhq.com – statische Seiten auf Cloudflare Workers (Static Assets).",
+  "scripts": {
+    "dev": "wrangler dev --env=\"\"",
+    "check": "wrangler deploy --dry-run --env=\"\" && wrangler deploy --dry-run --env dev",
+    "deploy": "wrangler deploy --env=\"\"",
+    "deploy:dev": "wrangler deploy --env dev"
+  },
+  "devDependencies": {
+    "wrangler": "4.165.0"
+  }
+}
