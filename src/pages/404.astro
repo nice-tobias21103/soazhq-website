@@ -1,0 +1,17 @@
+---
+// 404-Seite – wird für jede unbekannte Adresse ausgeliefert (siehe
+// "not_found_handling" in wrangler.jsonc). Zweisprachig, weil wir nicht wissen,
+// aus welchem Sprachbereich jemand kommt.
+import Base from '../layouts/Base.astro';
+import { t, ROUTES } from '../i18n';
+const en = t('en').notFound;
+const de = t('de').notFound;
+---
+<Base lang="en" page={null} title={`404 · ${en.title}`}>
+  <section class="wrap hero">
+    <p class="label">404</p>
+    <h1>{en.title}</h1>
+    <p class="sub">{en.text} <a href={ROUTES.home.en}>{en.back}</a></p>
+    <p class="sub" lang="de">{de.text} <a href={ROUTES.home.de}>{de.back}</a></p>
+  </section>
+</Base>

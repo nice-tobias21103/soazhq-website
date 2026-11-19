@@ -1,15 +1,17 @@
 {
   "name": "soazhq-website",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Website für soazhq.com – statische Seiten auf Cloudflare Workers (Static Assets).",
+  "type": "module",
+  "description": "Website für soazhq.com – gebaut mit Astro, ausgeliefert über Cloudflare Workers (Static Assets).",
   "scripts": {
-    "dev": "wrangler dev --env=\"\"",
-    "check": "wrangler deploy --dry-run --env=\"\" && wrangler deploy --dry-run --env dev",
-    "deploy": "wrangler deploy --env=\"\"",
-    "deploy:dev": "wrangler deploy --env dev"
+    "dev": "astro dev",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "preview": "wrangler dev --env=\"\"",
+    "check": "npm run build && wrangler deploy --dry-run --env=\"\" && wrangler deploy --dry-run --env dev"
   },
   "devDependencies": {
+    "astro": "7.4.13",
     "wrangler": "4.165.0"
   }
 }

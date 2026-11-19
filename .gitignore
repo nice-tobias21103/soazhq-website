@@ -15,3 +15,8 @@ node_modules/
 Thumbs.db
 .vscode/*
 !.vscode/extensions.json
+
+# Astro: Build-Ergebnis und Cache (werden bei jedem Build neu erzeugt,
+# wie bin/ und obj/ in C#)
+dist/
+.astro/

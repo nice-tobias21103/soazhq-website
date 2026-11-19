@@ -1,0 +1,88 @@
+---
+/**
+ * Base.astro – das gemeinsame Gerüst JEDER Seite: <head>, Kopfzeile, Fußzeile.
+ *
+ * C#-Vergleich: wie _Layout.cshtml in ASP.NET Razor. Der Teil zwischen den
+ * "---" läuft beim Bauen (wie C#-Code im Razor-@{ }-Block), darunter steht
+ * das HTML. <slot /> ist die Stelle, an der der Inhalt der Seite landet
+ * (wie @RenderBody()).
+ */
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import { SITE } from '../site';
+import { t, ROUTES, LANGS, type Lang, type PageKey } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  /** Welche Seite das ist – für den Sprachumschalter und hreflang. null = 404 */
+  page: PageKey | null;
+  title: string;
+  description?: string;
+}
+
+const { lang, page, title, description } = Astro.props;
+const tx = t(lang);
+const home = ROUTES.home[lang];
+// Bei der 404-Seite führt der Umschalter zur jeweiligen Startseite
+const target = (l: Lang) => (page ? ROUTES[page][l] : ROUTES.home[l]);
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title}</title>
+  {description && <meta name="description" content={description}>}
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  {page && LANGS.map((l) => (
+    <link rel="alternate" hreflang={l} href={new URL(ROUTES[page][l], Astro.site).href}>
+  ))}
+  {page && <link rel="alternate" hreflang="x-default" href={new URL(ROUTES[page].en, Astro.site).href}>}
+  {/* Hell/Dunkel sofort anwenden (siehe public/theme.js) */}
+  <script is:inline src="/theme.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">{tx.skip}</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href={home}><Logo />{SITE.name}</a>
+      <div class="header-right">
+        <nav class="main-nav" aria-label="Main">
+          <a href={`${home}#story`}>{tx.nav.story}</a>
+          <a href={`${home}#us`}>{tx.nav.us}</a>
+          <a href={`${home}#timeline`}>{tx.nav.timeline}</a>
+        </nav>
+        <div class="controls">
+          <nav class="lang-switch" aria-label={tx.langSwitchLabel}>
+            {LANGS.map((l) => (
+              <a href={target(l)} hreflang={l} lang={l} aria-current={l === lang ? 'true' : undefined}
+                 title={t(l).langName}>{l.toUpperCase()}</a>
+            ))}
+          </nav>
+          {/* Ohne JavaScript bleibt der Knopf versteckt (theme.js blendet ihn ein) */}
+          <button class="theme-toggle" type="button" data-theme-toggle hidden aria-label={tx.themeLabel}>
+            <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"></path></svg>
+            <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <slot />
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>© {SITE.since} {SITE.name}</span>
+      <nav aria-label={tx.footer.legal}>
+        <a href={ROUTES.legal[lang]}>{tx.footer.legal}</a>
+        <a href={ROUTES.privacy[lang]}>{tx.footer.privacy}</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

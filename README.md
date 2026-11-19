@@ -1,42 +1,57 @@
 # soazhq-website
 
-Quellcode der Website [soazhq.com](https://soazhq.com): ein paar schlichte, statische Seiten,
-ausgeliefert über Cloudflare Workers (Static Assets).
+Quellcode der Website [soazhq.com](https://soazhq.com). Gebaut mit [Astro](https://astro.build)
+als statische Seite, ausgeliefert über Cloudflare Workers (Static Assets).
 
-Reines HTML + CSS, kein JavaScript, kein Build-Schritt, keine Cookies, keine externen Ressourcen.
+- Englisch unter `/`, Deutsch unter `/de/`
+- Hell/Dunkel-Modus (folgt dem Gerät, mit Umschalter)
+- Responsiv für Handy, Tablet und Desktop
+- Kein Tracking, keine Cookies, keine externen Ressourcen
 
 ## Aufbau
 
 ```text
-public/               ← alles hier drin wird 1:1 ausgeliefert
-├── index.html        Startseite
-├── offenlegung.html  Offenlegung nach § 25 Mediengesetz
-├── datenschutz.html  Datenschutzerklärung
-├── 404.html          Seite für unbekannte Adressen
-├── styles.css        einziges Stylesheet (inkl. Dark Mode)
-├── favicon.svg       Logo
-├── robots.txt        Hinweis für Suchmaschinen
-└── _headers          Sicherheits-Header (wird gelesen, nicht ausgeliefert)
-wrangler.jsonc        Wrangler-Konfiguration
-package.json          legt die Wrangler-Version fest (wie eine NuGet-Referenz)
-package-lock.json     exakte Versionen aller Abhängigkeiten
+src/
+├── site.ts              Name, Ort usw. – an einer Stelle für alle Seiten
+├── i18n/
+│   ├── en.ts            alle englischen Texte
+│   ├── de.ts            alle deutschen Texte (gleiche Struktur wie en.ts)
+│   └── index.ts         Sprach-Hilfen und Seitenadressen pro Sprache
+├── layouts/Base.astro   gemeinsames Gerüst: <head>, Kopfzeile, Fußzeile
+├── components/          Bausteine (Startseiten-Inhalt, Logo)
+├── pages/               jede Datei = eine Adresse
+│   ├── index.astro          /            (EN)
+│   ├── legal-notice.astro   /legal-notice/
+│   ├── privacy.astro        /privacy/
+│   ├── 404.astro            unbekannte Adressen
+│   └── de/                  /de/, /de/offenlegung/, /de/datenschutz/
+└── styles/global.css    Farben, Layout, Hell/Dunkel
+public/                  wird 1:1 übernommen (Favicon, _headers, theme.js, robots.txt)
+astro.config.mjs         Astro-Einstellungen (Sprachen, Build)
+wrangler.jsonc           Cloudflare-Konfiguration (liefert ./dist aus)
 ```
 
-## Seiten bearbeiten
+## Texte ändern
 
-Die passende HTML-Datei in `public/` ändern. Jede Seite enthält Kopf- und Fußzeile selbst,
-weil es keinen Build-Schritt gibt. Für eine neue Seite am besten `offenlegung.html` kopieren.
+Fast alle Texte stehen in `src/i18n/en.ts` und `src/i18n/de.ts`. Beide Dateien müssen dieselben
+Schlüssel haben – fehlt einer, schlägt der Build fehl. Rechtstexte stehen direkt in den
+jeweiligen Seiten unter `src/pages/`.
+
+## Build und Deploy
+
+`npm run build` erzeugt den Ordner `dist/` mit reinem HTML/CSS. Cloudflare baut und deployt
+automatisch bei jedem Merge (`develop` → Testumgebung, `main` → soazhq.com).
 
 ## Branches
 
 - `main` – veröffentlichter Stand
 - `develop` – Teststand
-- Änderungen nur per Pull Request von einem eigenen Branch (`feature/…`, `fix/…`, `docs/…`) nach `develop`, Release per Pull Request `develop` → `main`.
+- Änderungen nur per Pull Request von einem eigenen Branch nach `develop`, Release per Pull Request `develop` → `main`.
 
-## Lokal ausprobieren (optional, Node.js 20+)
+## Lokal ausprobieren (optional, Node.js 22+)
 
 ```bash
-npm ci          # Abhängigkeiten laut package-lock.json installieren
-npm run dev     # http://localhost:8787
-npm run check   # Konfiguration prüfen, ohne zu deployen
+npm ci           # Abhängigkeiten installieren
+npm run dev      # Astro-Vorschau mit automatischem Neuladen
+npm run check    # bauen und Cloudflare-Konfiguration prüfen
 ```
