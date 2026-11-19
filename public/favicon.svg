@@ -1,5 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="SOAZ HQ">
-  <!-- Abgerundetes Quadrat mit "S" – Platzhalter-Logo -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- SOAZ-HQ-Logo: Briefumschlag mit Dach-Klappe im abgerundeten Quadrat -->
   <rect width="64" height="64" rx="14" fill="#1f5fbf"/>
-  <text x="32" y="45" text-anchor="middle" font-family="system-ui, -apple-system, Segoe UI, Arial, sans-serif" font-size="38" font-weight="700" fill="#ffffff">S</text>
+  <path d="M14 30 L32 15 L50 30" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+  <rect x="17" y="30" width="30" height="19" rx="2" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M17 31 L32 42 L47 31" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
 </svg>

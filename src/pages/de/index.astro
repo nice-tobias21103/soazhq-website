@@ -1,0 +1,10 @@
+---
+// Deutsche Startseite: soazhq.com/de/
+import Base from '../../layouts/Base.astro';
+import Home from '../../components/Home.astro';
+import { t } from '../../i18n';
+const tx = t('de');
+---
+<Base lang="de" page="home" title={tx.home.title} description={tx.home.description}>
+  <Home lang="de" />
+</Base>
